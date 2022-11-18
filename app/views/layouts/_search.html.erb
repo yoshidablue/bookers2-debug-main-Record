@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+  <%= form_with url: search_path, method: :get, local: true do |f| %>
+    <!-- 検索ワード：content -->
+    <%= f.text_field :content %>
+    <!-- 検索対象：model -->
+    <%= f.select :model, options_for_select({"User" => "user", "Book" => "book"}) %>
+    <!-- 検索方法：method -->
+    <!-- "選択肢で表示する内容" => DBに渡す値（保存させる内容） -->
+    <%= f.select :method, options_for_select({"完全一致" => "perfect", "前方一致" => "forward", "後方一致" => "backward", "部分一致" => "partial"}) %>
+    <%= f.submit "検索" %>
+  <% end %>
+<% end %>

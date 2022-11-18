@@ -1,0 +1,7 @@
+<!-- コメントはbookに結びついたbook_commentであるため、２つ用意する必要がある -->
+<!-- book_commentをcreateするためのリクエストは、ルーティングもネスト（親子関係）しているため、２つ必要 -->
+<%= form_with model: [book, book_comment], local: false do |f| %>
+  <!-- rowsはコメント欄の縦幅 -->
+  <%= f.text_area :comment, rows: "5", placeholder: "コメントをここに", class: "form-control" %>
+  <%= f.submit "送信" %>
+<% end %>

@@ -1,0 +1,11 @@
+<% if book.favorited_by?(current_user) %>
+  <!-- 非同期通信は remote: true で設定 -->
+  <%= link_to book_favorites_path(book), method: :delete, remote: true do %>
+    ❤︎<%= book.favorites.count %>
+  <% end %>
+<% else %>
+  <!-- 非同期通信は remote: true で設定 -->
+  <%= link_to book_favorites_path(book), method: :post, remote: true do %>
+    ♡<%= book.favorites.count %>
+  <% end %>
+<% end %>
