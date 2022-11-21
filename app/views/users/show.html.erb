@@ -67,5 +67,98 @@
           </tbody>
         </table>
       </div>
+
+      <h2>７日分の投稿数</h2>
+
+      <!-- 過去７日分の投稿の一覧 -->
+      <div class="table_width">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>６日前</th>
+              <th>５日前</th>
+              <th>４日前</th>
+              <th>３日前</th>
+              <th>２日前</th>
+              <th>昨日</th>
+              <th>今日</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @books.created_6days.count %></td>
+              <td><%= @books.created_5days.count %></td>
+              <td><%= @books.created_4days.count %></td>
+              <td><%= @books.created_3days.count %></td>
+              <td><%= @books.created_2days.count %></td>
+              <td><%= @yesterday_book.count %></td>
+              <td><%= @today_book.count %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- グラフ -->
+      <canvas id="myLineChart"></canvas>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          $(document).on('turbolinks:load', function() {
+            var ctx = document.getElementById("myLineChart");
+            var myLineChart = new Chart(ctx, {
+              // グラフの種類
+              type: 'line',
+              // グラフに描画するデータ
+              data: {
+                labels: ['６日前', '５日前', '４日前', '３日前', '２日前', '１日前', '今日'],
+                datasets: [
+                  {
+                    // グラフに名前をつける
+                    label: '投稿した本の数',
+                    // データの値
+                    data: [<%= @books.created_6days.count %>,
+                           <%= @books.created_5days.count %>,
+                           <%= @books.created_4days.count %>,
+                           <%= @books.created_3days.count %>,
+                           <%= @books.created_2days.count %>,
+                           <%= @yesterday_book.count %>,
+                           <%= @today_book.count %>
+                    ],
+                    // 線の色
+                    borderColor: "rgba(0,0,255,1)",
+                    // 線の下の塗りつぶしの色
+                    backgroundColor: "rgba(0,0,0,0)"
+                  }
+                ],
+              },
+              options: {
+                // グラフのタイトル
+                title: {
+                  // タイトル表示の許可するかどうか
+                  display: true,
+                  // タイトル名
+                  text: '７日間の投稿数の比較'
+                },
+                scales: {
+                  // y軸
+                  yAxes: [{
+                    // 目盛線
+                    ticks: {
+                      // 軸の最大値
+                      suggestedMax: 10,
+                      // 軸の最小値
+                      suggestedMin: 0,
+                      // 軸の刻み幅
+                      stepSize: 1,
+                      // 軸のラベル
+                      callback: function(value, index, values){
+                        return value
+                      }
+                    }
+                  }]
+                },
+              }
+            });
+          });
+        </script>
     </div>
   </div>
